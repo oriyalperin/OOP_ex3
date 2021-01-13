@@ -137,25 +137,25 @@ class GraphAlgo(GraphAlgoInterface):
                uses the tarjan algorithm in a iterative way
                """
         if self.graph.v_size() == 0 or self.graph.e_size() == 0 or self.graph.Nodes.get(id1) is None:
-            return None
+            return []
         disc = {}
         low = {}
         time = 0
-        return self.scc_id(id1, time, disc, low)
+        return self._scc_id_(id1, time, disc, low)
 
     def connected_components(self) -> List[list]:
         """
         uses the tarjan algorithm in a iterative way
         """
         if self.graph.v_size() == 0 or self.graph.e_size() == 0:
-            return None
+            return [[]]
         disc = {}
         low = {}
         time = 0
-        com = self.scc(time, disc, low)
+        com = self._scc_(time, disc, low)
         return com
 
-    def scc_util(self, u,st, com, time, disc, low, id:tuple = -1):
+    def _scc_util_(self, u,st, com, time, disc, low, id:tuple = -1):
         work = [(u, 0)]  # recursion stack
         while work: # while the stack isn't empty
             u, i = work[-1]  # i is next successor to process.
@@ -201,18 +201,18 @@ class GraphAlgo(GraphAlgoInterface):
                 u, _ = work[-1]  # u= pop from work stack the next vertex
                 low[u] = min(low[u], low[temp])  # if the neighbor low is less then u low -set it to ni low
 
-    def scc(self, time, disc, low):
+    def _scc_(self, time, disc, low):
         com = []
         st = []
         for node in self.graph.get_all_v().keys(): # pass all nodes in the graph
             if node not in disc:  # if we didn't visit them
-                self.scc_util(node,st,com,time,disc,low)  # found their component 
+                self._scc_util_(node,st,com,time,disc,low)  # found their component
         return com
 
-    def scc_id(self, key, time, disc, low):
+    def _scc_id_(self, key, time, disc, low):
         com = []
         st = []  
-        self.scc_util(key,st, com, time, disc, low, key)  # find key component
+        self._scc_util_(key,st, com, time, disc, low, key)  # find key component
         return com.pop(len(com)-1)  # return the key component
 
     def plot_graph(self) -> None:
@@ -243,5 +243,3 @@ class GraphAlgo(GraphAlgoInterface):
                     # draw an arrow between the nodes
 
             plt.show()
-
-
