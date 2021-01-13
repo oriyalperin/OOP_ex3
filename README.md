@@ -7,11 +7,7 @@ The first class we implemented is
 DiGraph 
 	which basically stores all the graph properties within it.
 	Within this class we have created two dictioneries: one of nodes and one of edges.
-	Nodes- the keys are the keys of the nodes and the values are the nodes themselves - each node includes key and pos.
-	Edges- the keys is each node key in the graph, and each value includes an array with two places.
-		each place includes a dictionry of another node key, and the value is the weight of the edge beteen the two nodes.
-		in the 0 index of the array the dictionry presents all the predecessors of the node key.
-		in the 1 index of the array the dictionry presents all the sucessors of the node key.
+	Nodes- the keys are the keys of the nodes and the values are the nodes themselves(node_data type) - each node includes id ,pos, edges_in(dict) and edges_out(dict). 
 	NodeCount- counts the number of vertices in the graph
 	EdgeCount- counts the amount of our edges in the graph
 	mc- counts the amount of our actions in the graph
