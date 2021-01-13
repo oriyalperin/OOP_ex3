@@ -5,7 +5,6 @@ class DiGraph(GraphInterface):
 
     def __init__(self):
         self.Nodes={}
-        self.Edges={}
         self.EdgeCount=0
         self.NodeCount=0
         self.mc=0
@@ -21,23 +20,23 @@ class DiGraph(GraphInterface):
 
     def all_in_edges_of_node(self, id1: int) -> dict:
         if self.Nodes.get(id1) is not None:
-            return self.Edges.get(id1)[0]
-        return None
+            return self.Nodes.get(id1).edges_out
+        return {}
 
     def all_out_edges_of_node(self, id1: int) -> dict:
         if self.Nodes.get(id1) is not None:
-            return self.Edges.get(id1)[1]
-        return None
+            return self.Nodes.get(id1).edges_in
+        return {}
 
     def get_mc(self) -> int:
         return self.mc
 
     def add_edge(self, id1: int, id2: int, weight: float) -> bool:
         if self.Nodes.get(id1) is None or self.Nodes.get(id2) is None \
-                or id1==id2 or self.Edges.get(id1)[1].get(id2) is not None or weight <=0 :
+                or id1==id2 or self.Nodes.get(id1).edges_out.get(id2) is not None or weight <=0 :
             return False
-        self.Edges.get(id1)[1][id2] = weight
-        self.Edges.get(id2)[0][id1] = weight
+        self.Nodes.get(id1).edges_out[id2]= weight
+        self.Nodes.get(id2).edges_in[id1] = weight
         self.EdgeCount += 1
         self.mc += 1
         return True
@@ -45,52 +44,49 @@ class DiGraph(GraphInterface):
     def add_node(self, node_id: int, pos: tuple = None) -> bool:
         if self.Nodes.get(node_id) is not None:
             return False
-        self.Nodes[node_id] = Node(node_id, pos)
-        self.Edges[node_id] = [{}, {}]
+        self.Nodes[node_id] = node_data(node_id, pos)
         self.mc += 1
         self.NodeCount += 1
         return True
 
     def remove_node(self, node_id: int) -> bool:
         if self.Nodes.get(node_id) is not None:
-            for i in self.Edges.get(node_id)[0].keys():  # pass all the successors of node_id
-                self.Edges.get(i)[1].pop(node_id)  # remove the node_id from edges out of the successor
+            for i in self.Nodes.get(node_id).edges_in.keys(): # pass all the predecessors of node_id
+                self.Nodes.get(i).edges_out.pop(node_id)  # remove the node_id from edges in of the predecessor
                 self.EdgeCount -= 1
-            for i in self.Edges.get(node_id)[1].keys():  # pass all the predecessors of node_id
-                self.Edges.get(i)[0].pop(node_id)  # remove the node_id from edges in of the predecessor
+            for i in self.Nodes.get(node_id).edges_out.keys():  # pass all the successors of node_id
+                self.Nodes.get(i).edges_in.pop(node_id)  # remove the node_id from edges out of the successor
                 self.EdgeCount -= 1
             self.Nodes.pop(node_id)
-            self.Edges.pop(node_id)
             self.mc += 1
             self.NodeCount -= 1
             return True
         return False
 
     def remove_edge(self, node_id1: int, node_id2: int) -> bool:
-        if self.Nodes.get(node_id1) is not None and self.Nodes.get(node_id2) and self.Edges.get(node_id1)[1].get(
-                node_id2) is not None:
-            self.Edges.get(node_id1)[1].pop(node_id2)  # remove the id2 from edges in of the predecessor
-            self.Edges.get(node_id2)[0].pop(node_id1)  # remove the id1 from edges out of the successor
+        if self.Nodes.get(node_id1) is not None and self.Nodes.get(node_id2) is not None and self.Nodes.get(node_id1).\
+                edges_out.get(node_id2) is not None:
+            self.Nodes.get(node_id1).edges_out.pop(node_id2)  # remove the id2 from edges in of the predecessor
+            self.Nodes.get(node_id2).edges_in.pop(node_id1)  # remove the id1 from edges out of the successor
             self.EdgeCount -= 1
             self.mc += 1
+            return True
         return False
 
     def __repr__(self):
-        return "{}".format(self.Edges)
+        return "Graph: "+ "|V|= " +str(self.NodeCount) + " |E|= "+str(self.EdgeCount)
 
 
-class Node:
+class node_data:
 
     def __init__(self, key, pos=None):
         self.id = key
         self.pos = pos
+        self.edges_out ={}
+        self.edges_in ={}
 
     def __repr__(self):
         if self.pos is not None:
-            return "(key: {}, pos: {},)".format(self.id, self.pos)
+            return str(self.id)+" pos: "+self.pos+" |edges out| "+str(len(self.edges_out))+" |edges in| "+str(len(self.edges_out))
         else:
-            return "(key: {})".format(self.id)
-
-
-
-
+            return str(self.id)+": |edges out| "+str(len(self.edges_out))+" |edges in| "+str(len(self.edges_in))
