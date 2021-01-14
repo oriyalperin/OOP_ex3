@@ -87,6 +87,6 @@ class node_data:
 
     def __repr__(self):
         if self.pos is not None:
-            return str(self.id)+" pos: "+self.pos+" |edges out| "+str(len(self.edges_out))+" |edges in| "+str(len(self.edges_out))
+            return str(self.id)+" pos: "+str(self.pos)+" |edges out| "+str(len(self.edges_out))+" |edges in| "+str(len(self.edges_out))
         else:
             return str(self.id)+": |edges out| "+str(len(self.edges_out))+" |edges in| "+str(len(self.edges_in))
