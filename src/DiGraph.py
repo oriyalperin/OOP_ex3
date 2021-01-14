@@ -20,12 +20,12 @@ class DiGraph(GraphInterface):
 
     def all_in_edges_of_node(self, id1: int) -> dict:
         if self.Nodes.get(id1) is not None:
-            return self.Nodes.get(id1).edges_out
+            return self.Nodes.get(id1).edges_in
         return {}
 
     def all_out_edges_of_node(self, id1: int) -> dict:
         if self.Nodes.get(id1) is not None:
-            return self.Nodes.get(id1).edges_in
+            return self.Nodes.get(id1).edges_out
         return {}
 
     def get_mc(self) -> int:
