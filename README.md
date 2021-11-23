@@ -1,4 +1,5 @@
-# EX3 - Directed Weighted Graph & Algorithms // Python
+# EX3 - Directed Weighted Graph & Algorithms 
+## pyton
 ## Oriya Alperin | Dvir Hackmon
 In this project, we programmed a directed weighted graph and its algorithms
 
@@ -6,12 +7,11 @@ In this project, we programmed a directed weighted graph and its algorithms
 * **DiGraph**: 
 which stores all the graph properties within it.
 Within this class, we have created two dictionaries: one of the nodes and one of the edges.
-Nodes- the keys are the keys of the nodes and the values are the nodes themselves(node_data type) - each node includes id, pos, edges_in(dict), and edges_out(dict). 
-NodeCount- counts the number of vertices in the graph
-EdgeCount- counts the number of our edges in the graph
-mc- counts the number of our actions in the graph
-
-all the usually function: remove node/edge, add node/edge, v size, e size.
+1. Nodes- the keys are the keys of the nodes and the values are the nodes themselves(node_data type) - each node includes id, pos, edges_in(dict), and edges_out(dict). 
+2. NodeCount- counts the number of vertices in the graph
+3. EdgeCount- counts the number of our edges in the graph
+4. mc- counts the number of our actions in the graph
+. all the usually function: remove node/edge, add node/edge, v size, e size.
 
 * **GraphAlgo**:
 it performs some functions:
