@@ -1,7 +1,6 @@
-# EX3 - Directed Weighted Graph & Algorithms 
-## pyton
+# EX3 - Directed Weighted Graph & Algorithms
 ## Oriya Alperin | Dvir Hackmon
-In this project, we programmed a directed weighted graph and its algorithms
+In this project, we programmed a directed weighted graph and its algorithms in Python.
 
 ### classes
 * **DiGraph**: 
